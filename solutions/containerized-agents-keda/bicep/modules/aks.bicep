@@ -57,6 +57,14 @@ resource _aks 'Microsoft.ContainerService/managedClusters@2024-05-01' = {
     networkProfile: {
       networkPlugin: 'azure'
       outboundType: OutboundType
+      serviceCidr: '172.16.0.0/16'
+      dnsServiceIP: '172.16.0.10'
+      serviceCidrs: [
+        '172.16.0.0/16'
+      ]
+      ipFamilies: [
+        'IPv4'
+      ]
     }
     agentPoolProfiles: [
       {
@@ -226,7 +234,6 @@ resource _aksMonitoringMsiDcra 'Microsoft.ContainerService/managedClusters/provi
     dataCollectionRuleId: dataCollectionRuleId
   }
 }
-
 
 output aksKubeletIdentity string = _aks.properties.identityProfile.kubeletidentity.objectId
 output aksKeyVaultIdentity string = _aks. properties.addonProfiles.azureKeyvaultSecretsProvider.identity.objectId
